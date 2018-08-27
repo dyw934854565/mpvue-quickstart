@@ -6,27 +6,25 @@
       <button @click="decrement">-</button>
     </p>
 
-    <a href="/pages/index/main" class="home">去往首页</a>
+    <span @click="() => this.$router.push('/index/main')" class="home">去往首页</span>
   </div>
 </template>
 
 <script>
 // Use Vuex
-import store from './store'{{#if_eq lintConfig "airbnb"}};{{/if_eq}}
+import {mapGetters, mapMutations} from 'vuex'{{#if_eq lintConfig "airbnb"}};{{/if_eq}}
 
 export default {
   computed: {
-    count{{#unless_eq lintConfig "airbnb"}} {{/unless_eq}}() {
-      return store.state.count{{#if_eq lintConfig "airbnb"}};{{/if_eq}}
-    }{{#if_eq lintConfig "airbnb"}},{{/if_eq}}
+    ...mapGetters([
+      'count'{{#if_eq lintConfig "airbnb"}},{{/if_eq}}
+    ]){{#if_eq lintConfig "airbnb"}},{{/if_eq}}
   },
   methods: {
-    increment{{#unless_eq lintConfig "airbnb"}} {{/unless_eq}}() {
-      store.commit('increment'){{#if_eq lintConfig "airbnb"}};{{/if_eq}}
-    },
-    decrement{{#unless_eq lintConfig "airbnb"}} {{/unless_eq}}() {
-      store.commit('decrement'){{#if_eq lintConfig "airbnb"}};{{/if_eq}}
-    }{{#if_eq lintConfig "airbnb"}},{{/if_eq}}
+    ...mapMutations([
+      'increment',
+      'decrement'{{#if_eq lintConfig "airbnb"}},{{/if_eq}}
+    ]){{#if_eq lintConfig "airbnb"}},{{/if_eq}}
   }{{#if_eq lintConfig "airbnb"}},{{/if_eq}}
 }{{#if_eq lintConfig "airbnb"}};{{/if_eq}}
 </script>

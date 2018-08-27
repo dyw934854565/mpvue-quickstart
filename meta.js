@@ -34,15 +34,10 @@ module.exports = {
       "type": "list",
       "message": "Vue build",
       "choices": [
-        // {
-        //   "name": "Runtime + Compiler: recommended for most users",
-        //   "value": "standalone",
-        //   "short": "standalone"
-        // },
         {
-          "name": "Runtime-only: no custom render function, only can compile template in *.vue",
-          "value": "runtime",
-          "short": "runtime"
+          "name": "Runtime + Compiler: recommended for most users",
+          "value": "standalone",
+          "short": "standalone"
         }
       ]
     },

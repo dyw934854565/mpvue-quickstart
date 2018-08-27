@@ -22,7 +22,7 @@ function resolve (dir) {
 module.exports = {
   context: path.resolve(__dirname, '../'),
   entry: {
-    app: './src/main.js'
+    app: './src/h5/main.js'
   },
   output: {
     path: config.build.assetsRoot,
@@ -38,6 +38,7 @@ module.exports = {
       'vue$': 'vue/dist/vue.esm.js',
       {{/if_eq}}
       '@': resolve('src'),
+      'adapters': resolve("./src/adapters/h5"),
     }
   },
   module: {

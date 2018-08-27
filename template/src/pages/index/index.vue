@@ -1,7 +1,7 @@
 <template>
-  <div class="container" @click="clickHandle('test click', $event)">
+  <div class="container">
 
-    <div class="userinfo">
+    <div class="userinfo" @click="clickHandle('test click', $event)">
       <img class="userinfo-avatar" v-if="userInfo.avatarUrl" :src="userInfo.avatarUrl" background-size="cover" />
       <div class="userinfo-nickname">
         <card :text="userInfo.nickName"></card>
@@ -41,7 +41,7 @@ export default {
 
   methods: {
     {{#if vuex}}gotoVuex{{#unless_eq lintConfig "airbnb"}} {{/unless_eq}}() {
-      this.$router.go('/counter/main'){{#if_eq lintConfig "airbnb"}};{{/if_eq}}
+      this.$router.push('/counter/main'){{#if_eq lintConfig "airbnb"}};{{/if_eq}}
     },
     {{/if}}getUserInfo{{#unless_eq lintConfig "airbnb"}} {{/unless_eq}}() {
       // 调用登录接口 各端不一样可以写adapter

@@ -9,6 +9,11 @@ const store = new Vuex.Store({
   state: {
     count: 0{{#if_eq lintConfig "airbnb"}},{{/if_eq}}
   },
+  getters: {
+    count (state) {
+      return state.count{{#if_eq lintConfig "airbnb"}},{{/if_eq}}
+    }{{#if_eq lintConfig "airbnb"}},{{/if_eq}}
+  },
   mutations: {
     increment: (state) => {
       const obj = state{{#if_eq lintConfig "airbnb"}};{{/if_eq}}

@@ -19,10 +19,10 @@ function getEntry (rootSrc) {
     var key = relative(rootSrc, file).replace('.js', '');
     map[key] = file;
   })
-   return map;
+  return map;
 }
 
-const appEntry = { app: resolve('./src/main.js') }
+const appEntry = { app: resolve('./src/mpvue/main.js') }
 const pagesEntry = getEntry(resolve('./src'), 'pages/**/main.js')
 const entry = Object.assign({}, appEntry, pagesEntry)
 
@@ -42,10 +42,8 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.vue', '.json'],
     alias: {
-      {{#if_eq build "standalone"}}
-      // 'vue$': 'vue/dist/vue.esm.js',
-      {{/if_eq}}
       'vue': 'mpvue',
+      'adapters': resolve("./src/adapters/mpvue"),
       '@': resolve('src')
     },
     symlinks: false,

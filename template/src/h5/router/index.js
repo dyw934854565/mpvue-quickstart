@@ -8,10 +8,13 @@ Vue.use(Router)
 export default new Router({
   mode: 'history',
   routes: [{
+    path: '/',
+    redirect: '/index/main'{{#if_eq lintConfig "airbnb"}},{{/if_eq}}
+  }, {
     path: '/index/main',
-    component: Home,
+    component: Home{{#if_eq lintConfig "airbnb"}},{{/if_eq}}
   }{{#if vuex}}, {
     path: '/counter/main',
-    component: Counter,
+    component: Counter{{#if_eq lintConfig "airbnb"}},{{/if_eq}}
   }{{/if}}]
 })
