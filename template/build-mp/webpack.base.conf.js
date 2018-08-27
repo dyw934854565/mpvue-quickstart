@@ -116,12 +116,12 @@ module.exports = {
         flatten: true
       },
       {
-        from: resolve("./static"),
-        to: resolve("./dist/static"),
+        from: resolve("./static/"),
+        to: resolve("./dist/"),
         ignore: [".*"]
       },
       {
-        from: "views/**/*.json",
+        from: "pages/**/*.json",
         to: "",
         context: "src/"
       }

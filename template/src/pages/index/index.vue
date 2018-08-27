@@ -1,12 +1,7 @@
 <template>
   <div class="container">
 
-    <div class="userinfo" @click="clickHandle('test click', $event)">
-      <img class="userinfo-avatar" v-if="userInfo.avatarUrl" :src="userInfo.avatarUrl" background-size="cover" />
-      <div class="userinfo-nickname">
-        <card :text="userInfo.nickName"></card>
-      </div>
-    </div>
+    <img class="vue-logo" @click="clickHandle('test click', $event)" src="/images/logo.png" />
 
     <div class="usermotto">
       <div class="user-motto">
@@ -30,8 +25,7 @@ import card from '@/components/card'{{#if_eq lintConfig "airbnb"}};{{/if_eq}}
 export default {
   data{{#unless_eq lintConfig "airbnb"}} {{/unless_eq}}() {
     return {
-      motto: 'Hello World',
-      userInfo: {}{{#if_eq lintConfig "airbnb"}},{{/if_eq}}
+      motto: 'Hello World'{{#if_eq lintConfig "airbnb"}},{{/if_eq}}
     }{{#if_eq lintConfig "airbnb"}};{{/if_eq}}
   },
 
@@ -59,25 +53,13 @@ export default {
 </script>
 
 <style scoped>
-.userinfo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.userinfo-avatar {
-  width: 128rpx;
-  height: 128rpx;
-  margin: 20rpx;
-  border-radius: 50%;
-}
-
-.userinfo-nickname {
-  color: #aaa;
+.vue-logo {
+  width: 100px;
+  height: 100px;
 }
 
 .usermotto {
-  margin-top: 150px;
+  margin-top: 50px;
 }
 
 .form-control {
