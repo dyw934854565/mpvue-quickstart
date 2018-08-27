@@ -63,11 +63,11 @@ h5版和小程序版都有入口文件，小程序版同样的可以把$router�
 
 2、在组件里，我们可以这样实现差异
 ```
-import router from 'adapters/router'
-router.push()
+import request from 'adapters/request'
+request.post(url, data)
 ```
-在h5版， 会resolve到 `/src/adapters/h5/router`。
-在小程序版， 会resolve到 `/src/adapters/mpvue/router`。
+在h5版， 会resolve到 `/src/adapters/h5/request`。
+在小程序版， 会resolve到 `/src/adapters/mpvue/request`。
 
 ## 同样，我们也可以使用adapter的方式来实现差异
 
