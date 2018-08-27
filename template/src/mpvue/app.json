@@ -1,7 +1,6 @@
 {
   "pages": [
-    "pages/index/main",
-    "pages/logs/main"{{#if vuex}},
+    "pages/index/main"{{#if vuex}},
     "pages/counter/main"
     {{/if}}
   ],

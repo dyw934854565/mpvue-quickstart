@@ -1,7 +1,7 @@
 <template>
   <div class="container" @click="clickHandle('test click', $event)">
 
-    <div class="userinfo" @click="bindViewTap">
+    <div class="userinfo">
       <img class="userinfo-avatar" v-if="userInfo.avatarUrl" :src="userInfo.avatarUrl" background-size="cover" />
       <div class="userinfo-nickname">
         <card :text="userInfo.nickName"></card>
@@ -19,7 +19,7 @@
       <input type="text" class="form-control" v-model.lazy="motto" placeholder="v-model.lazy" />
     </form>
     {{#if vuex}}
-    <a href="/pages/counter/main" class="counter">去往Vuex示例页面</a>
+    <a @click="gotoVuex" class="counter">去往Vuex示例页面</a>
     {{/if}}
   </div>
 </template>
@@ -40,21 +40,11 @@ export default {
   },
 
   methods: {
-    bindViewTap{{#unless_eq lintConfig "airbnb"}} {{/unless_eq}}() {
-      const url = '../logs/main'{{#if_eq lintConfig "airbnb"}};{{/if_eq}}
-      wx.navigateTo({ url }){{#if_eq lintConfig "airbnb"}};{{/if_eq}}
+    {{#if vuex}}gotoVuex{{#unless_eq lintConfig "airbnb"}} {{/unless_eq}}() {
+      this.$router.go('/counter/main'){{#if_eq lintConfig "airbnb"}};{{/if_eq}}
     },
-    getUserInfo{{#unless_eq lintConfig "airbnb"}} {{/unless_eq}}() {
-      // 调用登录接口
-      wx.login({
-        success: () => {
-          wx.getUserInfo({
-            success: (res) => {
-              this.userInfo = res.userInfo{{#if_eq lintConfig "airbnb"}};{{/if_eq}}
-            }{{#if_eq lintConfig "airbnb"}},{{/if_eq}}
-          }){{#if_eq lintConfig "airbnb"}};{{/if_eq}}
-        }{{#if_eq lintConfig "airbnb"}},{{/if_eq}}
-      }){{#if_eq lintConfig "airbnb"}};{{/if_eq}}
+    {{/if}}getUserInfo{{#unless_eq lintConfig "airbnb"}} {{/unless_eq}}() {
+      // 调用登录接口 各端不一样可以写adapter
     },
     clickHandle{{#unless_eq lintConfig "airbnb"}} {{/unless_eq}}(msg, ev) {
       console.log('clickHandle:', msg, ev){{#if_eq lintConfig "airbnb"}};{{/if_eq}}

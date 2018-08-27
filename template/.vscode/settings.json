@@ -1,0 +1,27 @@
+{
+  "prettier.eslintIntegration": true,
+  "prettier.stylelintIntegration": true,
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": true,
+  "prettier.semi": false,
+  "eslint.autoFixOnSave": true,
+  "css.validate": false,
+  "less.validate": false,
+  "scss.validate": false,
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    {
+      "language": "vue",
+      "autoFix": true
+    }
+  ],
+  "javascript.implicitProjectConfig.experimentalDecorators": true,
+  "eslint.options": {
+    "extensions": [".js", ".vue"]
+  },
+  "stylelint.enable": true,
+  "vetur.validation.style": false,
+  "vetur.format.styleInitialIndent": true,
+  "vetur.format.scriptInitialIndent": true
+}

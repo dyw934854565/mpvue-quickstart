@@ -111,18 +111,22 @@ module.exports = {
   },
   plugins: [
     new MpvuePlugin(),
-    new CopyWebpackPlugin([{
-      from: '**/*.json',
-      to: ''
-    }], {
-      context: 'src/'
-    }),
     new CopyWebpackPlugin([
       {
-        from: path.resolve(__dirname, '../static'),
-        to: path.resolve(__dirname, '../dist/static'),
-        ignore: ['.*']
+        from: resolve("./src/mpvue/*.json"),
+        to: resolve("./dist"),
+        flatten: true
+      },
+      {
+        from: resolve("./static"),
+        to: resolve("./dist/static"),
+        ignore: [".*"]
+      },
+      {
+        from: "views/**/*.json",
+        to: "",
+        context: "src/"
       }
-    ])
+    ]),
   ]
 }
