@@ -1,7 +1,16 @@
 // https://github.com/michael-ciniawsky/postcss-load-config
 
-module.exports = {
-  "plugins": {
-    "postcss-mpvue-wxss": {}
+const postcssConfigs = {
+  h5: {
+    plugins: {
+      autoprefixer: {}
+    }
+  },
+  mpvue: {
+    plugins: {
+      'postcss-mpvue-wxss': {}
+    }
   }
 }
+
+module.exports = postcssConfigs[process.env.BUILDTO]
