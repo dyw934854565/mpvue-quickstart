@@ -3,11 +3,13 @@
 const postcssConfigs = {
   h5: {
     plugins: {
+      precss: {},
       autoprefixer: {}
     }
   },
   mpvue: {
     plugins: {
+      precss: {},
       'postcss-mpvue-wxss': {}
     }
   }
