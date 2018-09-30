@@ -16,8 +16,7 @@ function resolve (dir) {
 
 function getEntry (rootSrc) {
   const map = {};
-  glob.sync(rootSrc + '/pages/**/main.js')
-  .forEach(file => {
+  glob.sync(rootSrc + '/pages/**/main.js').forEach(file => {
     const key = relative(rootSrc, file).replace('.js', '');
     map[key] = file;
   })

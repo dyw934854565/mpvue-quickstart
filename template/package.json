@@ -5,15 +5,20 @@
   "author": "{{ author }}",
   "private": true,
   "scripts": {
-    "dev": "rm -rf ./dist && webpack-dev-server --inline --progress --config build-h5/webpack.dev.conf.js",
     "start": "npm run dev",
-    "build": "rm -rf ./dist && node build-h5/build.js",
-    "dev:mp": "rm -rf ./dist && webpack -p -w --config build-mp/webpack.dev.conf.js",
-    "build:mp": "rm -rf ./dist && node build-mp/build.js"{{#unit}},
+    "dev": "rimraf ./dist && webpack-dev-server --inline --progress --config build-h5/webpack.dev.conf.js",
+    "build": "rimraf ./dist && node build-h5/build.js",
+    "dev:mp": "rimraf ./dist && webpack -p -w --config build-mp/webpack.dev.conf.js",
+    "build:mp": "rimraf ./dist && node build-mp/build.js",
+    "dev-test": "cross-env NODE_ENV=test npm run dev",
+    "build-test": "cross-env NODE_ENV=test npm run build",
+    "dev-test:mp": "cross-env NODE_ENV=test npm run dev:mp",
+    "build-test:mp": "cross-env NODE_ENV=test npm run build:mp"{{#unit}},
     "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run"{{/unit}}{{#e2e}},
     "e2e": "node test/e2e/runner.js"{{/e2e}}{{#if_or unit e2e}},
     "test": "{{#unit}}npm run unit{{/unit}}{{#unit}}{{#e2e}} && {{/e2e}}{{/unit}}{{#e2e}}npm run e2e{{/e2e}}"{{/if_or}}{{#lint}},
-    "lint": "eslint --ext .js,.vue src{{#unit}} test/unit/specs{{/unit}}{{#e2e}} test/e2e/specs{{/e2e}}"{{/lint}}
+    "eslint": "eslint --ext .js,.vue src{{#unit}} test/unit{{/unit}}{{#e2e}} test/e2e/specs{{/e2e}}",
+    "stylelint": "stylelint --ext .css,.vue src{{#unit}} test/unit{{/unit}}{{#e2e}} test/e2e/specs{{/e2e}}"{{/lint}}
   },
   "dependencies": {
     "mpvue": "^1.0.11",
@@ -56,6 +61,10 @@
     "eslint-plugin-import": "^2.11.0",
     "eslint-plugin-node": "^6.0.1",
     "eslint-plugin-html": "^4.0.3",
+    "stylelint": "^9.5.0",
+    "stylelint-config-recommended": "^2.1.0",
+    "stylelint-config-recommended-scss": "^3.2.0",
+    "stylelint-scss": "^3.3.0",
     {{#if_eq lintConfig "standard"}}
     "eslint-config-standard": "^11.0.0",
     "eslint-plugin-promise": "^3.4.0",
@@ -66,6 +75,8 @@
     "eslint-import-resolver-webpack": "^0.9.0",
     {{/if_eq}}
     {{/lint}}
+    "cross-env": "^5.2.0",
+    "rimraf": "^2.6.2",
     "eventsource-polyfill": "^0.9.6",
     "express": "^4.16.3",
     "extract-text-webpack-plugin": "^3.0.2",

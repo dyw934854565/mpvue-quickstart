@@ -39,7 +39,7 @@ module.exports = {
       {{/if_eq}}
       '@': resolve('src'),
       'config': resolve(`./src/config/${process.env.NODE_ENV}`),
-      'adapters': resolve('./src/adapters/h5)
+      'adapters': resolve('./src/adapters/h5')
     }
   },
   module: {
