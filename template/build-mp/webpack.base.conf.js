@@ -1,23 +1,24 @@
-var path = require('path')
-var webpack = require('webpack')
-var utils = require('./utils')
-var config = require('../config')
-var vueLoaderConfig = require('./vue-loader.conf')
-var MpvuePlugin = require('webpack-mpvue-asset-plugin')
-var glob = require('glob')
-var CopyWebpackPlugin = require('copy-webpack-plugin')
-var relative = require('relative')
+process.env.BUILD_TO = 'mpvue'
+const path = require('path')
+const webpack = require('webpack')
+const utils = require('./utils')
+const config = require('../config')
+const vueLoaderConfig = require('./vue-loader.conf')
+const MpvuePlugin = require('webpack-mpvue-asset-plugin')
+const glob = require('glob')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
+const relative = require('relative')
+const env = require(`../config/${process.env.NODE_ENV}.env`)
 
-process.env.BUILDTO = 'mpvue'
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
 
 function getEntry (rootSrc) {
-  var map = {};
+  const map = {};
   glob.sync(rootSrc + '/pages/**/main.js')
   .forEach(file => {
-    var key = relative(rootSrc, file).replace('.js', '');
+    const key = relative(rootSrc, file).replace('.js', '');
     map[key] = file;
   })
   return map;
@@ -36,15 +37,14 @@ module.exports = {
   output: {
     path: config.build.assetsRoot,
     filename: '[name].js',
-    publicPath: process.env.NODE_ENV === 'production'
-      ? config.build.assetsPublicPath
-      : config.dev.assetsPublicPath
+    publicPath: config[process.env.BUILD_TYPE].assetsPublicPath
   },
   resolve: {
     extensions: ['.js', '.vue', '.json'],
     alias: {
       'vue': 'mpvue',
       'adapters': resolve("./src/adapters/mpvue"),
+      'config': resolve(`./src/config/${process.env.NODE_ENV}`),
       '@': resolve('src')
     },
     symlinks: false,
@@ -110,7 +110,11 @@ module.exports = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      BUILDTO: JSON.stringify('mpvue')
+      'process.env': {
+        ...env,
+        BUILD_TO: process.env.BUILD_TO,
+        BUILD_TYPE: process.env.BUILD_TYPE
+      }
     }),
     new MpvuePlugin(),
     new CopyWebpackPlugin([

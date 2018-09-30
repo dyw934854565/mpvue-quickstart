@@ -1,31 +1,24 @@
-process.env.NODE_ENV = process.env.NODE_ENV || 'dev'
-process.env.BUILD_TYPE = 'dev'
+process.env.NODE_ENV = process.env.NODE_ENV || 'prod'
+process.env.BUILD_TYPE = 'build'
 const utils = require('./utils')
 const webpack = require('webpack')
 const config = require('../config')
 const merge = require('webpack-merge')
 const baseWebpackConfig = require('./webpack.base.conf')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 // const HtmlWebpackPlugin = require('html-webpack-plugin')
-const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
-
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 
-// add hot-reload related code to entry chunks
-// Object.keys(baseWebpackConfig.entry).forEach(function (name) {
-//   baseWebpackConfig.entry[name] = ['./build/dev-client'].concat(baseWebpackConfig.entry[name])
-// })
-
-module.exports = merge(baseWebpackConfig, {
+const webpackConfig = merge(baseWebpackConfig, {
   module: {
     rules: utils.styleLoaders({
-      sourceMap: config.dev.cssSourceMap,
+      sourceMap: config.build.productionSourceMap,
       extract: true
     })
   },
-  // cheap-module-eval-source-map is faster for development
-  // devtool: '#cheap-module-eval-source-map',
-  devtool: '#source-map',
+  devtool: config.build.productionSourceMap ? '#source-map' : false,
   output: {
     path: config.build.assetsRoot,
     // filename: utils.assetsPath('[name].[chunkhash].js'),
@@ -34,7 +27,9 @@ module.exports = merge(baseWebpackConfig, {
     chunkFilename: utils.assetsPath('[id].js')
   },
   plugins: [
-    // copy from ./webpack.prod.conf.js
+    new UglifyJsPlugin({
+      sourceMap: true
+    }),
     // extract css into its own file
     new ExtractTextPlugin({
       // filename: utils.assetsPath('[name].[contenthash].css')
@@ -47,6 +42,9 @@ module.exports = merge(baseWebpackConfig, {
         safe: true
       }
     }),
+    // keep module.id stable when vender modules does not change
+    new webpack.HashedModuleIdsPlugin(),
+    // split vendor js into its own file
     new webpack.optimize.CommonsChunkPlugin({
       name: 'common/vendor',
       minChunks: function (module, count) {
@@ -58,20 +56,18 @@ module.exports = merge(baseWebpackConfig, {
         ) || count > 1
       }
     }),
+    // extract webpack runtime and module manifest to its own file in order to
+    // prevent vendor hash from being updated whenever app bundle is updated
     new webpack.optimize.CommonsChunkPlugin({
       name: 'common/manifest',
       chunks: ['common/vendor']
-    }),
-
-    // https://github.com/glenjamin/webpack-hot-middleware#installation--usage
-    // new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin(),
-    // https://github.com/ampedandwired/html-webpack-plugin
-    // new HtmlWebpackPlugin({
-    //   filename: 'index.html',
-    //   template: 'index.html',
-    //   inject: true
-    // }),
-    new FriendlyErrorsPlugin()
+    })
   ]
 })
+
+if (config.build.bundleAnalyzerReport) {
+  const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+  webpackConfig.plugins.push(new BundleAnalyzerPlugin())
+}
+
+module.exports = webpackConfig

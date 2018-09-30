@@ -15,4 +15,4 @@ const postcssConfigs = {
   }
 }
 
-module.exports = postcssConfigs[process.env.BUILDTO]
+module.exports = postcssConfigs[process.env.BUILD_TO]

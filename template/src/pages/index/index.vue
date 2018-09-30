@@ -21,7 +21,7 @@
 
 <script>
 import card from '@/components/card'{{#if_eq lintConfig "airbnb"}};{{/if_eq}}
-
+import config from 'config'{{#if_eq lintConfig "airbnb"}};{{/if_eq}}
 export default {
   data{{#unless_eq lintConfig "airbnb"}} {{/unless_eq}}() {
     return {
@@ -46,6 +46,7 @@ export default {
   },
 
   created{{#unless_eq lintConfig "airbnb"}} {{/unless_eq}}() {
+    console.log(config){{#if_eq lintConfig "airbnb"}};{{/if_eq}}
     // 调用应用实例的方法获取全局数据
     this.getUserInfo(){{#if_eq lintConfig "airbnb"}};{{/if_eq}}
   }{{#if_eq lintConfig "airbnb"}},{{/if_eq}}

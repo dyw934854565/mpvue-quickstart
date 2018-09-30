@@ -1,10 +1,11 @@
 'use strict'
+process.env.BUILD_TO = 'h5'
 const path = require('path')
 const webpack = require('webpack')
 const utils = require('./utils')
 const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
-process.env.BUILDTO = 'h5'
+const env = require(`../config/${process.env.NODE_ENV}.env`)
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
@@ -28,9 +29,7 @@ module.exports = {
   output: {
     path: config.build.assetsRoot,
     filename: '[name].js',
-    publicPath: process.env.NODE_ENV === 'production'
-      ? config.build.assetsPublicPath
-      : config.dev.assetsPublicPath
+    publicPath: config[process.env.BUILD_TYPE].assetsPublicPath
   },
   resolve: {
     extensions: ['.js', '.vue', '.json'],
@@ -39,7 +38,8 @@ module.exports = {
       'vue$': 'vue/dist/vue.esm.js',
       {{/if_eq}}
       '@': resolve('src'),
-      'adapters': resolve("./src/adapters/h5"),
+      'config': resolve(`./src/config/${process.env.NODE_ENV}`),
+      'adapters': resolve('./src/adapters/h5)
     }
   },
   module: {
@@ -85,7 +85,11 @@ module.exports = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      BUILDTO: JSON.stringify('h5')
+      'process.env': {
+        ...env,
+        BUILD_TO: process.env.BUILD_TO,
+        BUILD_TYPE: process.env.BUILD_TYPE
+      }
     })
   ],
   node: {
