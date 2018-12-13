@@ -2,7 +2,7 @@
   "prettier.eslintIntegration": true,
   "prettier.stylelintIntegration": true,
   "editor.formatOnSave": true,
-  "editor.formatOnPaste": true,
+  "editor.formatOnPaste": false,
   "prettier.semi": false,
   "eslint.autoFixOnSave": true,
   "css.validate": false,
