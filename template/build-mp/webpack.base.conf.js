@@ -53,15 +53,17 @@ module.exports = {
   module: {
     rules: [
       {{#lint}}
-      {
-        test: /\.(js|vue)$/,
-        loader: 'eslint-loader',
-        enforce: 'pre',
-        include: [resolve('src'), resolve('test')],
-        options: {
-          formatter: require('eslint-friendly-formatter')
+      ...(config.dev.useEslint ? [
+        {
+          test: /\.(js|vue)$/,
+          loader: 'eslint-loader',
+          enforce: 'pre',
+          include: [resolve('src'), resolve('test')],
+          options: {
+            formatter: require('eslint-friendly-formatter')
+          }
         }
-      },
+      ] : []),
       {{/lint}}
       {
         test: /\.vue$/,
@@ -111,8 +113,8 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env': {
         ...env,
-        BUILD_TO: process.env.BUILD_TO,
-        BUILD_TYPE: process.env.BUILD_TYPE
+        BUILD_TO: JSON.stringify(process.env.BUILD_TO),
+        BUILD_TYPE: JSON.stringify(process.env.BUILD_TYPE)
       }
     }),
     new MpvuePlugin(),

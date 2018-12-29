@@ -87,8 +87,8 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env': {
         ...env,
-        BUILD_TO: process.env.BUILD_TO,
-        BUILD_TYPE: process.env.BUILD_TYPE
+        BUILD_TO: JSON.stringify(process.env.BUILD_TO),
+        BUILD_TYPE: JSON.stringify(process.env.BUILD_TYPE)
       }
     })
   ],
